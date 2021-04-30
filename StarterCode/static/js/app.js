@@ -55,7 +55,8 @@ function DrawBubblechart(sampleId) {
             mode: 'markers',
             marker: {
                 size: sample_values,
-                color: ['red', 'blue','yellow', 'orage', 'green', 'black', 'grey', 'purple', 'brown']
+                color: otu_ids,
+                colorscale: 'Picnic'
             }
         }
 
@@ -66,7 +67,9 @@ function DrawBubblechart(sampleId) {
             xaxis: { title: 'OTU ID'}
         }
 
-        Plotly.plot('bubble', bubbleArray, bubbleLayout);
+        Plotly.newPlot('bubble', bubbleArray, bubbleLayout);
+
+        
 
     });
 
@@ -93,9 +96,10 @@ function ShowMetadata(sampleId) {
         var location = result.location;
         var wfreq = result.wfreq;
 
+        selector.html('')
 
         selector.append()
-        .html(`id: ${sampleId}<br>`) // need to add a line break
+        .html(`id: ${sampleId}<br>`) 
 
         selector.append()
         .html(`ethnicity: ${ethnicity}<br>`)
@@ -111,14 +115,6 @@ function ShowMetadata(sampleId) {
 
         selector.append()
         .html(`location: ${location}<br>`)
-
-
-        // selector.append()
-        // .text(sampleId).property('value', sampleId);
-
-        // selector.append()
-        // .text(sampleId).property('value', sampleId);
-
 
 
     });
