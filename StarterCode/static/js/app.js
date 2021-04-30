@@ -40,7 +40,7 @@ function DrawBubblechart(sampleId) {
 
     d3.json('samples.json').then(data => {
         var samples = data.samples;
-        var resultArray = samples.filter(s => s.id == sampleId);
+        var resultArray = samples.filter(s => s.id == sampleId); // is this needed?
         var result = resultArray[0];
 
         var otu_ids = result.otu_ids;
@@ -54,26 +54,74 @@ function DrawBubblechart(sampleId) {
             type: 'scatter',
             mode: 'markers',
             marker: {
-                size: sample_values
+                size: sample_values,
+                color: ['red', 'blue','yellow', 'orage', 'green', 'black', 'grey', 'purple', 'brown']
             }
-        };
+        }
 
-        var data = [bubbleData];
+        var bubbleArray = [bubbleData];
 
         var bubbleLayout = {
-            title: 'OTU'
-        };
+            margin: {t: 30, l: 150},
+            xaxis: { title: 'OTU ID'}
+        }
 
-        Plotly.plot('bubble', data, bubbleLayout)
-
+        Plotly.plot('bubble', bubbleArray, bubbleLayout);
 
     });
 
-    }
+};
 
 
 function ShowMetadata(sampleId) {
     console.log(`ShowMetadata(${sampleId})`);
+
+    var selector = d3.select('#sample-metadata')
+
+    
+
+    d3.json('samples.json').then(data => {
+        console.log(data)
+        var metadata = data.metadata;
+
+        var resultArray = metadata.filter(s => s.id == sampleId); // is this needed?
+        var result = resultArray[0];
+        
+        var ethnicity = result.ethnicity;
+        var gender = result.gender;
+        var age = result.age;
+        var location = result.location;
+        var wfreq = result.wfreq;
+
+
+        selector.append()
+        .html(`id: ${sampleId}<br>`) // need to add a line break
+
+        selector.append()
+        .html(`ethnicity: ${ethnicity}<br>`)
+
+        selector.append()
+        .html(`gender: ${gender}<br>`)
+
+        selector.append()
+        .html(`age: ${age}<br>`)
+
+        selector.append()
+        .html(`wfreq: ${wfreq}<br>`)
+
+        selector.append()
+        .html(`location: ${location}<br>`)
+
+
+        // selector.append()
+        // .text(sampleId).property('value', sampleId);
+
+        // selector.append()
+        // .text(sampleId).property('value', sampleId);
+
+
+
+    });
 
 }
 
@@ -108,7 +156,7 @@ function InitDashboard() {
     ShowMetadata(id);
 
 });
-    // update bubblechart
+
     //update demographic info
 
 }
